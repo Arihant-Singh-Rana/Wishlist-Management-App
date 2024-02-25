@@ -1,71 +1,152 @@
-# Getting Started with Create React App
+# Wishlist Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Wishlist Management App! This React application allows users to input and manage their wishes in a convenient and user-friendly manner. The app provides features such as adding new wishes, displaying the wishlist, clearing all wishes, and deleting individual wishes.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+To run the app locally, follow these steps:
 
-### `npm start`
+1. Clone the repository:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+   ```bash
+   git clone https://github.com/Arihant-Singh-Rana/Wishlist-Management-App.git
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Navigate to the project directory:
 
-### `npm test`
+   ```bash
+   cd wishlist-management-app
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Install dependencies:
 
-### `npm run build`
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Run the app:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Now, you can access the app in your browser at [http://localhost:3000](http://localhost:3000).
 
-### `npm run eject`
+## Code Snippets
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### App Component (App.js)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The main `App` component handles the state of the wishlist and manages functions for adding, clearing, and deleting wishes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```jsx
+// ... (imports)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default function App() {
+  const [pass, setPass] = useState([]);
 
-## Learn More
+  function add({ updata }) {
+    setPass([...pass, updata]);
+  }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  function clearAll(clear) {
+    if (clear) {
+      setPass([]);
+    }
+  }
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  function DeleteItem(index) {
+    let temp = [...pass];
+    temp.splice(index, 1);
+    setPass(temp);
+  }
 
-### Code Splitting
+  return (
+    <>
+      <div id="parent">
+        <h1 id="h1">Wish List Manager</h1>
+        <UserInput addtothelist={add} clearAll={clearAll} />
+        <ShowData sendData={pass} DeleteItem={DeleteItem} />
+      </div>
+    </>
+  );
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### UserInput Component (UserInput.js)
 
-### Analyzing the Bundle Size
+The `UserInput` component handles the input form for adding wishes and includes buttons for updating and clearing the wishlist.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```jsx
+// ... (imports)
 
-### Making a Progressive Web App
+export default function UserInput({ addtothelist, clearAll }) {
+  const [item, setItem] = useState({ updata: "" });
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  function whenSubmmit(e) {
+    e.preventDefault();
+    addtothelist(item);
+    setItem({ updata: "" });
+  }
 
-### Advanced Configuration
+  function handleChange(e) {
+    e.preventDefault();
+    setItem({ updata: e.target.value });
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  function setClearAll(e) {
+    clearAll(true);
+    e.preventDefault();
+  }
 
-### Deployment
+  return (
+    <div className="parent">
+      <form>
+        <label htmlFor="inputwish" className="label">
+          Enter Your Wish Item :{" "}
+        </label>
+        <input
+          type="text"
+          id="inputwish"
+          value={item.updata}
+          onChange={handleChange}
+        />
+        <br />
+        <button onClick={whenSubmmit} id="add">
+          Update
+        </button>
+        <button onClick={setClearAll} id="clear">
+          Clear All
+        </button>
+      </form>
+    </div>
+  );
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### ShowData Component (ShowData.js)
 
-### `npm run build` fails to minify
+The `ShowData` component displays the wishlist items and includes a "Delete" button for each item.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Wishlist-Management-App
+```jsx
+// ... (imports)
+
+export default function ShowData({ sendData, DeleteItem }) {
+  let items = sendData.map((item, index) => (
+    <div key={index} className="parent">
+      <li>{item}</li>
+      <div className="delete">
+        <button onClick={() => DeleteItem(index)}>Delete</button>
+      </div>
+    </div> 
+  ));
+
+  return (
+    <div>
+      <h1 style={{ fontFamily: "Luxurious Roman" }}>Wish List Items : </h1>
+      <ul>{items}</ul>
+    </div>
+  );
+}
+```
+
+Feel free to explore and enhance the functionality of this Wishlist Management App!
