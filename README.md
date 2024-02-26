@@ -67,7 +67,7 @@ export default function App() {
   );
 }
 ```
-# Function for adding Items to the wish list manager in App.js
+### Function for adding Items to the wish list manager in App.js
 
 ```javascript  
 function add({ updata }) {
@@ -78,14 +78,14 @@ function add({ updata }) {
     setPass([...pass, updata]);
   }
 ```
-# Added a function to handle empty inputs in add() function in App.js
+### Added a function to handle empty inputs in add() function in App.js
 ```jsx
 if(updata.trim() === ""){
       alert("Please enter a wish Item before updating the list");
       return;
     }
 ```
-# Function for clearing all Items to the wish list manager in App.js
+### Function for clearing all Items to the wish list manager in App.js
 
 ```javascript  
 function clearAll(clear) {
@@ -95,7 +95,7 @@ function clearAll(clear) {
   }
 ```
 
-# Function for deleting specific Items to the wish list manager in App.js
+### Function for deleting specific Items to the wish list manager in App.js
 
 ```javascript  
 function DeleteItem(index) {
