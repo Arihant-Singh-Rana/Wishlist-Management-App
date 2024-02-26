@@ -45,19 +45,15 @@ export default function App() {
   const [pass, setPass] = useState([]);
 
   function add({ updata }) {
-    setPass([...pass, updata]);
+    ....
   }
 
   function clearAll(clear) {
-    if (clear) {
-      setPass([]);
-    }
+    ....
   }
 
   function DeleteItem(index) {
-    let temp = [...pass];
-    temp.splice(index, 1);
-    setPass(temp);
+    ....
   }
 
   return (
@@ -70,6 +66,43 @@ export default function App() {
     </>
   );
 }
+```
+## Function for adding Items to the wish list manager
+
+```javascript  
+function add({ updata }) {
+    if(updata.trim() === ""){
+      alert("Please enter a wish Item before updating the list");
+      return;
+    }
+    setPass([...pass, updata]);
+  }
+```
+# Added a function to handle empty inputs in add() function
+```jsx
+if(updata.trim() === ""){
+      alert("Please enter a wish Item before updating the list");
+      return;
+    }
+```
+## Function for clearing all Items to the wish list manager
+
+```javascript  
+function clearAll(clear) {
+    if (clear) {
+      setPass([]);
+    }
+  }
+```
+
+## Function for deleting specific Items to the wish list manager
+
+```javascript  
+function DeleteItem(index) {
+    let temp = [...pass];
+    temp.splice(index, 1);
+    setPass(temp);
+  }
 ```
 
 ### UserInput Component (UserInput.js)
@@ -101,22 +134,7 @@ export default function UserInput({ addtothelist, clearAll }) {
   return (
     <div className="parent">
       <form>
-        <label htmlFor="inputwish" className="label">
-          Enter Your Wish Item :{" "}
-        </label>
-        <input
-          type="text"
-          id="inputwish"
-          value={item.updata}
-          onChange={handleChange}
-        />
-        <br />
-        <button onClick={whenSubmmit} id="add">
-          Update
-        </button>
-        <button onClick={setClearAll} id="clear">
-          Clear All
-        </button>
+         {/* Elements for user Input.... */}
       </form>
     </div>
   );
